@@ -24,6 +24,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"  # management UI
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   api-gateway:
     build: api-gateway
@@ -42,9 +47,12 @@ services:
   event-system:
     build: event-system
     depends_on:
-      - mongo-user
-      - mongo-order
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      mongo-user:
+        condition: service_started
+      mongo-order:
+        condition: service_started
     environment:
       - RABBIT_URI=amqp://guest:guest@rabbitmq/
       - RABBIT_EXCHANGE=user_events
