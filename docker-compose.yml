@@ -1,12 +1,20 @@
 version: "3.8"
 services:
-  mongo:
+  mongo-user:
     image: mongo:6.0
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - mongo_user_data:/data/db
+
+  mongo-order:
+    image: mongo:6.0
+    restart: unless-stopped
+    ports:
+      - "27018:27017"  # map to different host port to avoid conflict
+    volumes:
+      - mongo_order_data:/data/db
 
   rabbitmq:
     image: rabbitmq:3.11-management
@@ -20,11 +28,13 @@ services:
   api-gateway:
     build: api-gateway
     depends_on:
-      - mongo
+      - mongo-user
+      - mongo-order
       - rabbitmq
     environment:
-      - USER_V1=0.0.0.0:8001
-      - USER_V2=0.0.0.0:8001
+      - USER_V1=http://user-service-v1:8000
+      - USER_V2=http://user-service-v1:8000
+      - ORDER_SERVICE=http://order-service:8003
       - P=1
     ports:
       - "8000:8000"
@@ -32,7 +42,8 @@ services:
   event-system:
     build: event-system
     depends_on:
-      - mongo
+      - mongo-user
+      - mongo-order
       - rabbitmq
     environment:
       - RABBIT_URI=amqp://guest:guest@rabbitmq/
@@ -42,10 +53,10 @@ services:
   user-service-v1:
     build: user-service-v1
     depends_on:
-      - mongo
+      - mongo-user
       - rabbitmq
     environment:
-      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_URI=mongodb://mongo-user:27017
       - MONGO_DB=userdb
       - RABBIT_URI=amqp://guest:guest@rabbitmq/
       - RABBIT_EXCHANGE=user_events
@@ -53,5 +64,20 @@ services:
     ports:
       - "8001:8000"
 
+  order-service:
+    build: order-service
+    depends_on:
+      - mongo-order
+      - rabbitmq
+    environment:
+      - MONGO_URI=mongodb://mongo-order:27017
+      - MONGO_DB=orderdb
+      - RABBIT_URI=amqp://guest:guest@rabbitmq/
+      - RABBIT_EXCHANGE=user_events
+      - RABBIT_ROUTING_KEY=user.update
+    ports:
+      - "8003:8000"
+
 volumes:
-  mongo_data:
+  mongo_user_data:
+  mongo_order_data:
