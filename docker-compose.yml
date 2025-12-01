@@ -70,7 +70,7 @@ services:
       - mongo-order
       - rabbitmq
     environment:
-      - MONGO_URI=mongodb://mongo-order:27018
+      - MONGO_URI=mongodb://mongo-order:27017
       - MONGO_DB=orderdb
       - RABBIT_URI=amqp://guest:guest@rabbitmq/
       - RABBIT_EXCHANGE=user_events
