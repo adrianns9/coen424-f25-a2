@@ -29,6 +29,12 @@ services:
     ports:
       - "8000:8000"
 
+  event-system:
+    build: event-system
+    depends_on:
+      - mongo
+      - rabbitmq
+
   user-service:
     build: user-service-v1
     depends_on:

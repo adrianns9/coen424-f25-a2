@@ -4,9 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/api-gateway/.idea/api-gateway.iml" filepath="$PROJECT_DIR$/api-gateway/.idea/api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/coen424-f25-a2.iml" filepath="$PROJECT_DIR$/.idea/coen424-f25-a2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/.idea/common.iml" filepath="$PROJECT_DIR$/common/.idea/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/event-system/.idea/event-system.iml" filepath="$PROJECT_DIR$/event-system/.idea/event-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/order-system/.idea/order-system.iml" filepath="$PROJECT_DIR$/order-system/.idea/order-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-service-v1/.idea/user-service-v1.iml" filepath="$PROJECT_DIR$/user-service-v1/.idea/user-service-v1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-service-v2/.idea/user-service-v2.iml" filepath="$PROJECT_DIR$/user-service-v2/.idea/user-service-v2.iml" />
     </modules>
   </component>
 </project>

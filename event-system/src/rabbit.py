@@ -1,5 +1,8 @@
 import aio_pika
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 RABBIT_URI = os.getenv("RABBIT_URI", "amqp://guest:guest@rabbitmq/")
 RABBIT_EXCHANGE = os.getenv("RABBIT_EXCHANGE", "user_events")
