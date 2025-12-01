@@ -1,0 +1,6 @@
+services:
+  coen424ass2:
+    image: coen424ass2
+    build:
+      context: .
+      dockerfile: ./Dockerfile

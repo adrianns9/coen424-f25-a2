@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-RABBIT_URI = os.getenv("RABBIT_URI", "amqp://guest:guest@rabbitmq")
+RABBIT_URI = os.getenv("RABBIT_URI", "amqp://guest:guest@rabbitmq/")
 RABBIT_EXCHANGE = os.getenv("RABBIT_EXCHANGE", "user_events")
 RABBIT_ROUTING_KEY = os.getenv("RABBIT_ROUTING_KEY", "user.update")
 RETRY_DELAY = 2
